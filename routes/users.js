@@ -1,5 +1,5 @@
 // var mongodbUri = 'mongodb+srv://qianwenzhangnancy:zqw123456@wit-qianwenzhang-cluster-yyg37.mongodb.net/taskmanagement';
-var mongodbUri = 'mongodb+srv://qianwenzhangnancy:zqw123456@wit-qianwenzhang-cluster-yyg37.mongodb.net/taskmanagementdb';
+var mongodbUri = 'mongodb+srv://qianwenzhangnancy:zqw123456@wit-qianwenzhang-cluster-yyg37.mongodb.net/taskmanagementdb?';
 let mongoose = require('mongoose');
 mongoose.connect(mongodbUri);
 
@@ -17,13 +17,36 @@ let router = express.Router();
 
 router.findOne = (req,res) =>{
   res.setHeader('Content-Type','application/json');
+  // var keyword = req.params.id;
+  // var _filter = {key:{$regex: keyword, $options: '$i'}}; // ignore capital letters
+  //
+  // User.find(_filter).sort({'_id':-1}).exec(function(err,user){
+  //     if(err)
+  //         res.json({message:'No user have found!'});
+  //     else{
+  //         res.json({message:'Here are searching result',user})
+  //     }
+  // })
+  //$regex: keyword, $options: '$i'
+   // const reg = new RegExp(req.params.id,'i'); // ignore capital words
+   //  var searchPart = req.params.id.toString();
+   //  var regularExpression = new RegExp(searchPart + ".*");
+//(req.params.id).toString()
+    var query = req.params.id;
+    var queryString = query.toString();
+    User.find({"userName":{$regex:queryString}},function(err,user) {
+        if (err)
+          res.json({ message: 'USER NOT Found!', errmsg : err } );
+        else{
+         // res.send(user[userName]);
 
-  User.find({"_id":req.params.id},function(err,user) {
-    if (err)
-      res.json({ message: 'USER NOT Found!', errmsg : err } );
-    else
-     // res.send(user[userName]);
-      res.json({ message: 'User has found! Do you want to send a request?' } );
+            if(user.length == 0)
+                res.json({message:'USER NOT FOUND'});
+            // if(user != null)
+            else
+                res.json({ message: 'User has found! Do you want to send a request?',data:user} );
+
+        }
   });
 }
 
