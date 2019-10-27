@@ -22,6 +22,16 @@ function getTotalTime(array){
     return totalTime;
 }
 
+router.deleteRecord = function(req,res){
+    Record.findByIdAndRemove(req.params.id,function(err){
+        if(err)
+            res.send(err)
+        else
+            res.json({message:'Records Deleted!', data: Record})
+    })
+
+}
+
 //主要是用户id和record id有点混淆了
 // router.findRecordsOfUser = function(req,res) {
 //     res.setHeader('Content-Type', 'application/json');

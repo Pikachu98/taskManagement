@@ -8,11 +8,11 @@ let UserSchema = new mongoose.Schema(
         userCoins: {type: Number, default: 0},
         tree:[{
             type:mongoose.Schema.Types.ObjectId,
-            ref:'tree'
+            ref:'trees'
         }],
-        bgm:[{
+        records:[{
             type:mongoose.Schema.Types.ObjectId,
-            ref:'bgm'
+            ref:'plantingRecord'
         }]
     },
     {

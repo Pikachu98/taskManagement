@@ -30,27 +30,28 @@ router.findOne = (req,res) =>{
 router.addUser = (req,res) => {
     res.setHeader('Content-Type', 'application/json');
     var user = new User();
-//     //verify whether the userName and userEmail have existed or not
-//     User.findOne({'userName': req.body.userName}, function (err, user) {
-//         if (err) {
-//             res.json({message: 'There is an error!', errmsg: err});
-//         } else {
-//             if(){
-    user.userName = req.body.userName;
-    user.userEmail = req.body.userEmail;
-    user.userPassword = req.body.userPassword;
-    user.save(function (err) {
-        if (err)
-            res.json({message: 'USER NOT Added', errmsg: err});
-        else
-            res.json({message: 'User has registered successfully', data: user})
+    //verify whether the userName and userEmail have existed or not
+    User.findOne({userName: req.body.userName}, function (err, user) {
+        if (err) {
+            res.json({message: 'ERROR', errmsg: err});
+        } else {
+            // if(user.userName != null)
+            if (user != null && user.userName == req.body.userName)
+                res.json({message: 'user name already exists'})
+            else {
+                let user1 = new User();
+                user1.userName = req.body.userName;
+                user1.userEmail = req.body.userEmail;
+                user1.userPassword = req.body.userPassword;
+                user1.save(function (err) {
+                    if (err)
+                        res.json({message: 'ERROR', errmsg: err});
+                    else
+                        res.json({message: 'User has registered successfully', data: user1})
+                })
+            }
+        }
     })
-//             }
-//             else{
-//                 res.json({message: 'USER NOT Added'});
-//             }
-//         }
-//     });
 }
 
 router.getCoins = (req, res)  => {

@@ -33,6 +33,7 @@ app.delete('/delete/:id',users.deleteUser);
 app.put('/buyTree/:id',users.putTree);
 //show all the trees in store
 app.get('/plantList', trees.findAllPlants);
+app.delete('/deleteRecord/:id',records.deleteRecord);
 //show all focus time
 // app.get('/totalFocusTime/:id',records.totalFocusTime);
 // app.get('/plantingRecords/:id', records.findRecordsOfUser);
