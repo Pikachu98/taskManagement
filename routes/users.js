@@ -136,6 +136,33 @@ router.putTree = (req,res) => {
     })
 }
 
+router.deleteTree = (req,res) => {
+    res.setHeader('Content-Type','application/json');
+    User.findById(req.params.id, function(err, user){
+        if (err)
+            res.json({ message: 'USER not Found!', errmsg : err } );
+        else {
+            for(var i = 0; i < user.tree.length; i++){
+                let count = 0;
+                if(user.tree[i] == req.body._id){
+                    count = i;
+                    user.tree.splice(i,1);
+                    user.markModified('tree');
+                    user.userCoins += 300;
+                    user.save(function(err){
+                        if(err)
+                            res.json({message:'Tree cannot be deleted',errmsg:err})
+
+                        res.json({message:'Tree Successfully Deleted!', data:user});
+                    })
+                }
+                if(i == user.tree.length -1 && count == 0)
+                    res.json({message:'You have not bought this tree!',errmsg:err});
+            }
+        }
+    })
+}
+
 
 
 module.exports = router;

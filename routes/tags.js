@@ -24,13 +24,18 @@ router.editTag = function (req,res) {
                 if(err)
                     res.send(err)
                 else{
-                    if(req.body.color != null)
-                        tag.tagColor = req.body.color;
-                    if(req.body.type != null)
-                        tag.tagType = req.body.type;
-                    if(req.body.description != null)
-                        tag.tagDescription = req.body.description;
-                    res.json({message:'Tag edited!' ,data:tag});
+                    if(req.body.tagColor != null)
+                        tag.tagColor = req.body.tagColor;
+                    if(req.body.tagType != null)
+                        tag.tagType = req.body.tagType;
+                    if(req.body.tagDescription != null)
+                        tag.tagDescription = req.body.tagDescription;
+                    tag.save(function (err,tag) {
+                        if(err)
+                            res.json({message:'Tag edited fail!', errmsg:err})
+                        res.json({message:'Tag edited!' ,data:tag});
+                    })
+
                 }
             })
         }
