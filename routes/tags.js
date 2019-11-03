@@ -20,14 +20,18 @@ router.editTag = function (req,res) {
         if(err)
             res.send(err)
         else{
-            tag.tagColor = req.body.color;
-            tag.tagType = req.body.type;
-            tag.tagDescription = req.body.description;
             tag.save(function(err){
                 if(err)
                     res.send(err)
-                else
-                    res.json({message:'Tag edited!' ,data:tag})
+                else{
+                    if(req.body.color != null)
+                        tag.tagColor = req.body.color;
+                    if(req.body.type != null)
+                        tag.tagType = req.body.type;
+                    if(req.body.description != null)
+                        tag.tagDescription = req.body.description;
+                    res.json({message:'Tag edited!' ,data:tag});
+                }
             })
         }
     })

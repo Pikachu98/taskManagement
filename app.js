@@ -26,20 +26,25 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
+
 app.get('/addFriend/:id', users.findOne);
-app.post('/user/register', users.addUser);
 app.get('/getCoinBalance/:id',users.getCoins);
-app.delete('/delete/:id',users.deleteUser);
-app.put('/buyTree/:id',users.putTree);
+//administrator function
+app.get('/allUsers',users.getUsers);
 //show all the trees in store
 app.get('/plantList', trees.findAllPlants);
-app.delete('/deleteRecord/:id',records.deleteRecord);
+//check one of the users details,also for administrator
+app.get('/getUser/:id',users.checkOne);
 //show all focus time
 // app.get('/totalFocusTime/:id',records.totalFocusTime);
 // app.get('/plantingRecords/:id', records.findRecordsOfUser);
+app.delete('/delete/:id',users.deleteUser);
+app.delete('/deleteRecord/:id',records.deleteRecord);
+app.delete('/tagDeletion/:id',tags.deleteTag);
+app.put('/buyTree/:id',users.putTree);
 app.put('/tagEdition/:id', tags.editTag);
 app.post('/tagCreation', tags.addTag);
-app.delete('/tagDeletion/:id',tags.deleteTag);
+app.post('/user/register', users.addUser);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

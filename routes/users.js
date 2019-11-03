@@ -12,26 +12,33 @@ db.once('open',function () {
 });
 
 var User = require('../models/users');
+var Tree = require('../models/trees');
 let express = require('express');
 let router = express.Router();
 
+router.getUsers = (req,res) => {
+    res.setHeader('Content-Type', 'application/json');
+    User.find(function (err, users) {
+        if(err)
+            res.send(err);
+        res.send(JSON.stringify(users,null,5));
+    });
+}
+
+router.checkOne = (req,res) => {
+    res.setHeader('Content-Type', 'application/json');
+
+    User.find({ "_id" : req.params.id },function(err, donation) {
+        if (err)
+            res.json({ message: 'USER NOT Found!', errmsg : err } );
+        else
+            res.send(JSON.stringify(donation,null,5));
+    });
+}
+
 router.findOne = (req,res) =>{
   res.setHeader('Content-Type','application/json');
-  // var keyword = req.params.id;
-  // var _filter = {key:{$regex: keyword, $options: '$i'}}; // ignore capital letters
-  //
-  // User.find(_filter).sort({'_id':-1}).exec(function(err,user){
-  //     if(err)
-  //         res.json({message:'No user have found!'});
-  //     else{
-  //         res.json({message:'Here are searching result',user})
-  //     }
-  // })
-  //$regex: keyword, $options: '$i'
-   // const reg = new RegExp(req.params.id,'i'); // ignore capital words
-   //  var searchPart = req.params.id.toString();
-   //  var regularExpression = new RegExp(searchPart + ".*");
-//(req.params.id).toString()
+
     var query = req.params.id;
     var queryString = query.toString();
     User.find({"userName":{$regex:queryString}},function(err,user) {
@@ -96,7 +103,7 @@ router.getCoins = (req, res)  => {
 router.deleteUser = (req,res) => {
     User.findByIdAndRemove(req.params.id, function(err){
         if(err)
-            res.json({message:'User NOT DELETED!', errmsg:err})
+            res.json({message:'User NOT DELETED!'})
         else
             res.json({message:'User Successfully Deleted!'});
     });
@@ -108,20 +115,23 @@ router.putTree = (req,res) => {
         if (err)
             res.json({ message: 'USER not Found!', errmsg : err } );
         else {
-            user.save(function(err){
-                if(err)
-                    res.json({message:'Tree Not Boughted Successfully!'})
-                else{
-                    if(user.userCoins <= 500){
-                        res.json({message:'Sorry, you do not have enough money!'})
-                    }
-                    else{
-                        user.userCoins -= 500;
-                        user.tree.push(req.body._id);
-                        res.json({message:'Tree Successfully Bought!', data:user});
-                    }
-                }
-            })
+            if(user.userCoins < 500){
+                res.json({message:'Sorry, you do not have enough money!'})
+            }
+            else{
+                let count = user.tree.length;
+                user.tree[count] = req.body._id;
+                user.markModified('tree');
+                user.userCoins -= 500;
+                user.save(function(err){
+                    if(err)
+                        res.json({message:'Error',errmsg:err})
+                   // user.tree.push(req.body._id);
+                    res.json({message:'Tree Successfully Bought!', data:user});
+                })
+            }
+
+
         }
     })
 }
