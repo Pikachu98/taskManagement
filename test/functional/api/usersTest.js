@@ -67,26 +67,32 @@ describe('Customers',  () =>{
             });
         });
     });
-    // describe('GET /allUsers',  () => {
-    //     it('should return all the users', function(done) {
-    //         chai.request(server)
-    //             .get('/allUsers')
-    //             .end((err, res) => {
-    //                 expect(res).to.have.status(200);
-    //                 expect(res.body).to.be.a('array');
-    //
-    //                 let result = _.map(res.body, (users) => {
-    //                     return { userEmail: users.userEmail };
-    //                 });
-    //                 expect(result).to.include( { userEmail: "qianwenzhangnancy@gmail.com"} );
-    //                 expect(result).to.include( {userEmail: "123456monica@gmail.com"} );
-    //                 expect(result).to.include( {userEmail: "lucyisgirl@gmail.com"} );
-    //                 expect(result).to.include( {userEmail: "ronaldoho@gmail.com"} );
-    //                 expect(result).to.include( {userEmail: "james@gmail.com"} );
-    //
-    //                 done();
-    //             });
-    //     });
-    // });
+    describe.only('GET /allUsers',  () => {
+        it('should return all the users', done => {
+            request(server)
+                .get('/allUsers')
+                .set("Accept", "application/json")
+                .expect("Content-Type", /json/)
+                .end((err, res) => {
+                    try {
+                        expect(res.body).to.be.a("array");
+                        expect(res.body.length).to.equal(5);
+
+                        let result = _.map(res.body, users => {
+                            return {userEmail: users.userEmail};
+                        });
+                        expect(result).to.deep.include({userEmail: "qianwenzhangnancy@gmail.com"});
+                        expect(result).to.deep.include({userEmail: "123456monica@gmail.com"});
+                        expect(result).to.deep.include({userEmail: "lucyisgirl@gmail.com"});
+                        expect(result).to.deep.include({userEmail: "ronaldoho@gmail.com"});
+                        expect(result).to.deep.include({userEmail: "james@gmail.com"});
+
+                        done();
+                    } catch(e){
+                        done(e)
+                    }
+                });
+        });
+    });
 
 });

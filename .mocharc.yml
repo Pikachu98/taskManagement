@@ -3,4 +3,4 @@ file:
 
 require: '@babel/register'
 
-timeout: 8000
+timeout: 800000
