@@ -95,7 +95,7 @@ describe('Customers',  () =>{
         });
     });
 
-    describe.only("GET /addFriend/:id", () => {
+    describe("GET /addFriend/:id", () => {
         describe("when there are related results", () => {
             it("should return the matching user", done => {
                 request(server)
@@ -124,19 +124,19 @@ describe('Customers',  () =>{
                     })
             })
         })
-    //     describe("when the id is invalid", () => {
-    //         it("should return the NOT found message", done => {
-    //             request(server)
-    //                 .get("/donations/9999")
-    //                 .set("Accept", "application/json")
-    //                 .expect("Content-Type", /json/)
-    //                 .expect(200)
-    //                 .end((err, res) => {
-    //                     expect(res.body.message).equals("Donation NOT Found!")
-    //                     done(err)
-    //                 })
-    //         })
-    //     })
+        describe.only("when no results are related", () => {
+            it("should return the NOT found message", done => {
+                request(server)
+                    .get("/addFriend/9999")
+                    .set("Accept", "application/json")
+                    .expect("Content-Type", /json/)
+                    .expect(200)
+                    .end((err, res) => {
+                        expect(res.body.message).equals("USER NOT FOUND")
+                        done(err)
+                    })
+            })
+        })
     })
 
 });

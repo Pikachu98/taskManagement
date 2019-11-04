@@ -43,7 +43,7 @@ router.findOne = (req,res) =>{
     var queryString = query.toString();
     User.find({"userName":{$regex:queryString}},function(err,user) {
         if (err)
-          res.json({ message: 'USER NOT Found!', errmsg : err } );
+          res.json({ message: 'USER NOT FOUND', errmsg : err } );
         else{
          // res.send(user[userName]);
 
