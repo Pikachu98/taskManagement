@@ -11,6 +11,19 @@ let mongod;
 let db, matchingCondition;
 
 describe('Customers',  () =>{
+    before(function (done) {
+        let username = 'qianwenzhangnancy';
+        let password = 'zqw123456';
+        let mongodburl = 'mongodb+srv://' + username + ':' + password + '@wit-qianwenzhang-cluster-yyg37.mongodb.net/taskmanagementdb';
+        mongoose.connect(mongodburl, {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false});
+
+        let db = mongoose.connection;
+        db.on('error', console.error.bind(console, 'connection error'));
+        db.once('open', function () {
+            console.log('We are connected to MongoDB Atlas!');
+            done();
+        });
+    });
     // before(async () => {
     //     try {
     //         mongod = new MongoMemoryServer({
@@ -168,7 +181,7 @@ describe('Customers',  () =>{
         });
     })
 
-    describe.only('GET /getUser/:id', () => {
+    describe('GET /getUser/:id', () => {
         describe("get the user if id is valid ",() =>{
             it("should return the information of specific user", done =>{
                 request(server)
@@ -185,18 +198,18 @@ describe('Customers',  () =>{
                     })
             })
         })
-        // describe("return the information if id is invalid", () => {
-        //     it('return the error', done => {
-        //         request(server)
-        //             .get("/getCoinBalance/1444444")
-        //             .set("Accept", "application/json")
-        //             .expect("Content-Type", /json/)
-        //             .expect(200)
-        //             .end((err,res) => {
-        //                 expect(res.body.message).equals("ERROR");
-        //                 done(err);
-        //             })
-        //     })
-        // });
+        describe.only("return the error information if id is invalid", () => {
+            it('return the error information', done => {
+                request(server)
+                    .get("/getUser/5db5f")
+                    .set("Accept", "application/json")
+                    .expect("Content-Type", /json/)
+                    .expect(200)
+                    .end((err,res) => {
+                        expect(res.body.message).equals("USER NOT Found!");
+                        done(err);
+                    })
+            })
+        });
     })
 })
