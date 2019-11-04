@@ -23,6 +23,20 @@ router.findAllPlants = (req,res) => {
     })
 }
 
+router.addTree = (req,res) => {
+    res.setHeader('Content-Type', 'application/json');
+    let tree = new Tree();
 
+    tree.treeName = req.body.treeName;
+    tree.treeType = req.body.treeType;
+    tree.treePicPath = req.body.treePicPath;
+    tree.treeDescription = req.body.treeDescription;
+
+    tree.save(function (err) {
+        if(err)
+            res.send(err)
+        res.json({message:"New tree added!", data: tree});
+    })
+}
 
 module.exports = router;

@@ -38,14 +38,16 @@ app.get('/getUser/:id',users.checkOne);
 //show all focus time
 // app.get('/totalFocusTime/:id',records.totalFocusTime);
 // app.get('/plantingRecords/:id', records.findRecordsOfUser);
-app.delete('/delete/:id',users.deleteUser);
+app.delete('/deleteUser/:id',users.deleteUser);
 app.delete('/deleteRecord/:id',records.deleteRecord);
-app.delete('/tagDeletion/:id',tags.deleteTag);
+app.delete('/deleteTag/:id',tags.deleteTag);
 app.put('/deleteTree/:id',users.deleteTree);
 app.put('/buyTree/:id',users.putTree);
 app.put('/tagEdition/:id', tags.editTag);
 app.post('/tagCreation', tags.addTag);
 app.post('/user/register', users.addUser);
+app.post('/addTree',trees.addTree);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
