@@ -88,7 +88,7 @@ router.getCoins = (req, res)  => {
     res.setHeader('Content-Type','application/json');
     User.findById({"_id":req.params.id},{"_id":0,"userCoins":1},function(err,user) {
         if (err)
-            res.json({ message: 'USER NOT Found!', errmsg : err } );
+            res.json({ message: 'ERROR', errmsg : err } );
         else{
             user.save(function(err){
                 if(err)

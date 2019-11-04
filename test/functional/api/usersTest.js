@@ -153,5 +153,18 @@ describe('Customers',  () =>{
                 })
             })
         })
+        describe("return the information if id is invalid", () => {
+            it('return the error', done => {
+                request(server)
+                    .get("/getCoinBalance/1444444")
+                    .set("Accept", "application/json")
+                    .expect("Content-Type", /json/)
+                    .expect(200)
+                    .end((err,res) => {
+                        expect(res.body.message).equals("ERROR");
+                        done(err);
+                    })
+            })
+        });
     })
 });
