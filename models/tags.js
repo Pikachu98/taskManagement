@@ -1,4 +1,4 @@
-let mongoose = require('mongoose');
+let mongoose = require('../routes/dbConnect');
 
 let TagSchema = new mongoose.Schema(
     {
