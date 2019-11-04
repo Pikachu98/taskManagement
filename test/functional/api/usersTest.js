@@ -124,7 +124,7 @@ describe('Customers',  () =>{
                     })
             })
         })
-        describe.only("when no results are related", () => {
+        describe("when no results are related", () => {
             it("should return the NOT found message", done => {
                 request(server)
                     .get("/addFriend/9999")
@@ -139,4 +139,19 @@ describe('Customers',  () =>{
         })
     })
 
+    describe.only("GET /getCoinBalance/:id", () => {
+        describe("get the coins when id is valid ",() =>{
+            it("should return the coins that user has", done =>{
+              request(server)
+                  .get("/getCoinBalance/5db5f1276df19224807d71db")
+                  .set("Accept", "application/json")
+                  .expect("Content-Type", /json/)
+                  .expect(200)
+                  .end((err,res) => {
+                      expect(res.body.message).equals("your coins: { userCoins: 9000 }");
+                      done(err);
+                })
+            })
+        })
+    })
 });
