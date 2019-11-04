@@ -43,7 +43,7 @@ describe('Customers',  () =>{
     // });
     describe('DELETE /deleteUser/:id',() => {
         describe("when the id is valid",() => {
-            it('should return the successful message of delete', () => {
+            it('should return the successful message with valid input when deleting', () => {
                 return request(server)
                     .delete("/deleteUser/5dbf20746c524713ecedcc13")
                     .expect({message: 'User Successfully Deleted!'});
@@ -58,14 +58,14 @@ describe('Customers',  () =>{
                     });
             });
         });
-        // describe("when the id is invalid",() => {
-        //     it('should return information of invalid input', () => {
-        //         return request(server)
-        //             .delete("/donations/1000")
-        //             .expect(200)
-        //             .expect({message: 'Donation NOT DELETED!'});
-        //     });
-        // });
+        describe("when the id is invalid",() => {
+            it('should return message with invalid input when deleting', () => {
+                return request(server)
+                    .delete("/deleteUser/1000")
+                    .expect(200)
+                    .expect({message: 'User NOT DELETED!'});
+            });
+        });
     });
     // describe('GET /allUsers',  () => {
     //     it('should return all the users', function(done) {
@@ -78,10 +78,15 @@ describe('Customers',  () =>{
     //                 let result = _.map(res.body, (users) => {
     //                     return { userEmail: users.userEmail };
     //                 });
-    //                 expect(result).to.include( { userEmail: qianwenzhangnancy@gmail.com} );
-    //                 expect(result).to.include( {userEmail: 888881} );
+    //                 expect(result).to.include( { userEmail: "qianwenzhangnancy@gmail.com"} );
+    //                 expect(result).to.include( {userEmail: "123456monica@gmail.com"} );
+    //                 expect(result).to.include( {userEmail: "lucyisgirl@gmail.com"} );
+    //                 expect(result).to.include( {userEmail: "ronaldoho@gmail.com"} );
+    //                 expect(result).to.include( {userEmail: "james@gmail.com"} );
     //
-    //
-    //
-    //
-    //                 done(
+    //                 done();
+    //             });
+    //     });
+    // });
+
+});
