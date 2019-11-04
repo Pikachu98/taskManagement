@@ -8,7 +8,7 @@ const _ = require("lodash");
 
 let server = require("../../../bin/www");;
 let mongod;
-let db, validID;
+let db, matchingCondition;
 
 describe('Customers',  () =>{
     // before(async () => {
@@ -67,7 +67,7 @@ describe('Customers',  () =>{
             });
         });
     });
-    describe.only('GET /allUsers',  () => {
+    describe('GET /allUsers',  () => {
         it('should return all the users', done => {
             request(server)
                 .get('/allUsers')
@@ -94,5 +94,49 @@ describe('Customers',  () =>{
                 });
         });
     });
+
+    describe.only("GET /addFriend/:id", () => {
+        describe("when there are related results", () => {
+            it("should return the matching user", done => {
+                request(server)
+                    .get('/addFriend/444')
+                    .set("Accept", "application/json")
+                    .expect("Content-Type", /json/)
+                    .expect(200)
+                    .expect({message: 'User has found! Do you want to send a request?'})
+                    .end((err, res) => {
+                        try {
+                            expect(res.body).to.be.a("object");
+                            expect(res.body.data.length).to.equal(2);
+
+                            // let result = _.map(res.body.data, users => {
+                            //     return {userEmail: users.userEmail};
+                            // });
+
+                            // expect(res.body.data).to.include(
+                            //     userName:"44444o",
+                            //     userEmail: "ronaldoho@gmail.com"});
+                            // expect(result).to.include({userEmail: "james@gmail.com"});
+                            done();
+                        } catch (e) {
+                            done(e)
+                        }
+                    })
+            })
+        })
+    //     describe("when the id is invalid", () => {
+    //         it("should return the NOT found message", done => {
+    //             request(server)
+    //                 .get("/donations/9999")
+    //                 .set("Accept", "application/json")
+    //                 .expect("Content-Type", /json/)
+    //                 .expect(200)
+    //                 .end((err, res) => {
+    //                     expect(res.body.message).equals("Donation NOT Found!")
+    //                     done(err)
+    //                 })
+    //         })
+    //     })
+    })
 
 });
