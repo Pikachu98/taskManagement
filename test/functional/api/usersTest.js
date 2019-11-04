@@ -139,7 +139,7 @@ describe('Customers',  () =>{
         })
     })
 
-    describe.only("GET /getCoinBalance/:id", () => {
+    describe("GET /getCoinBalance/:id", () => {
         describe("get the coins when id is valid ",() =>{
             it("should return the coins that user has", done =>{
               request(server)
@@ -167,4 +167,36 @@ describe('Customers',  () =>{
             })
         });
     })
-});
+
+    describe.only('GET /getUser/:id', () => {
+        describe("get the user if id is valid ",() =>{
+            it("should return the information of specific user", done =>{
+                request(server)
+                    .get("/getUser/5db5f1276df19224807d71db")
+                    .set("Accept", "application/json")
+                    .expect("Content-Type", /json/)
+                    .expect(200)
+                    .end((err,res) => {
+                        let result = _.map(res.body, users => {
+                            return {userEmail: users.userEmail};
+                        })
+                        expect(result[0]).to.include({userEmail: "james@gmail.com"});
+                        done();
+                    })
+            })
+        })
+        // describe("return the information if id is invalid", () => {
+        //     it('return the error', done => {
+        //         request(server)
+        //             .get("/getCoinBalance/1444444")
+        //             .set("Accept", "application/json")
+        //             .expect("Content-Type", /json/)
+        //             .expect(200)
+        //             .end((err,res) => {
+        //                 expect(res.body.message).equals("ERROR");
+        //                 done(err);
+        //             })
+        //     })
+        // });
+    })
+})
