@@ -27,23 +27,34 @@ router.findAllPlants = (req,res) => {
 router.addTree = (req,res) => {
     res.setHeader('Content-Type', 'application/json');
 
-    if(isNaN(req.body.treeType)) {
-        res.json({message:'tree type should be a number'});
-    }
-    else{
-        let tree = new Tree();
-        tree.treeName = req.body.treeName;
-        tree.treeType = req.body.treeType;
-        tree.treePicPath = req.body.treePicPath;
-        tree.treeDescription = req.body.treeDescription;
-        tree.save(function (err) {
-            if(err)
-                res.json({message: 'ERROR', errmsg: err});
-            else
-                res.json({message:"New tree added!", data: tree});
 
-        })
-    }
+    Tree.findOne({treeName: req.body.treeName}, function (err, tree) {
+        if (err) {
+            res.json({message: 'ERROR', errmsg: err});
+        } else {
+            // if(user.userName != null)
+            if (tree != null && tree.treeName == req.body.treeName)
+                res.json({message: 'tree has already existed'})
+            else {
+                if (isNaN(req.body.treeType)) {
+                    res.json({message: 'tree type should be a number'});
+                } else {
+                    let tree = new Tree();
+                    tree.treeName = req.body.treeName;
+                    tree.treeType = req.body.treeType;
+                    tree.treePicPath = req.body.treePicPath;
+                    tree.treeDescription = req.body.treeDescription;
+                    tree.save(function (err) {
+                        if (err)
+                            res.json({message: 'ERROR', errmsg: err});
+                        else
+                            res.json({message: "New tree added!", data: tree});
+
+                    })
+                }
+            }
+        }
+    })
 }
 
 module.exports = router;

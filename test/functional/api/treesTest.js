@@ -83,8 +83,8 @@ describe('Trees', ()=> {
                     });
             });
         })
-        
-        describe.only('if the inputs are invalid', () => {
+
+        describe('if the inputs are invalid', () => {
             it('should return the error message', () => {
                 const tree = {
                     treeName: "Cactus",
@@ -103,5 +103,28 @@ describe('Trees', ()=> {
                     })
             })
         });
+
+        describe('if input a tree name that has already existed', () => {
+            it('should return the message that let you know the tree has already existed', () => {
+
+                const tree = {
+                    treeName: "Cactus",
+                    //0 for bush,1 for tree
+                    treeType: 1,
+                    treePicPath: "",
+                    treeDescription: "I am the most dangerous and coolest plant, am I?",
+                    coinsToBuy: 500
+                };
+                return request(server)
+                    .post("/addTree")
+                    .send(tree)
+                    .expect(200)
+                    .then(res => {
+                        expect({message: 'tree has already existed'});
+                    })
+            });
+
+        })
+
     })
 })
