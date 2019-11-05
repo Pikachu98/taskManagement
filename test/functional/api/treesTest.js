@@ -53,4 +53,55 @@ describe('Trees', ()=> {
                 });
         });
     });
+
+    describe('POST /addTree', () => {
+        describe('if the inputs are valid', () => {
+            it('should return confirmation and update database ', () => {
+                const tree = {
+                    treeName: "Cactus",
+                    //0 for bush,1 for tree
+                    treeType: 1,
+                    treePicPath: "",
+                    treeDescription: "I am the most dangerous and coolest plant, am I?",
+                    coinsToBuy: 500
+                };
+                return request(server)
+                    .post("/addTree")
+                    .send(tree)
+                    .expect(200)
+                    .then(res => {
+                        expect({message: 'New tree added!'});
+                    })
+            });
+
+            after(() => {
+                return request(server)
+                    .get("/plantList")
+                    .expect(200)
+                    .then(res => {
+                        expect(res.body.length).equals(8);
+                    });
+            });
+        })
+        
+        describe.only('if the inputs are invalid', () => {
+            it('should return the error message', () => {
+                const tree = {
+                    treeName: "Cactus",
+                    //0 for bush,1 for tree
+                    treeType: "feinminfeineife",
+                    treePicPath: "",
+                    treeDescription: "I am the most dangerous and coolest plant, am I?",
+                    coinsToBuy: 500
+                };
+                return request(server)
+                    .post("/addTree")
+                    .send(tree)
+                    .expect(200)
+                    .then(res => {
+                        expect({message: 'tree type should be a number'});
+                    })
+            })
+        });
+    })
 })

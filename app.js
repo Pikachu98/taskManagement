@@ -44,7 +44,7 @@ app.delete('/deleteTag/:id',tags.deleteTag);
 app.put('/deleteTree/:id',users.deleteTree);
 app.put('/buyTree/:id',users.putTree);
 app.put('/tagEdition/:id', tags.editTag);
-app.post('/tagCreation', tags.addTag);
+app.post('/tagCreation', tags.addTag);              //√
 app.post('/user/register', users.addUser);          //√
 app.post('/addTree',trees.addTree);
 

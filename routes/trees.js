@@ -1,7 +1,7 @@
 // var mongodbUri = 'mongodb+srv://qianwenzhangnancy:zqw123456@wit-qianwenzhang-cluster-yyg37.mongodb.net/taskmanagementdb';
 // let mongoose = require('mongoose');
 // mongoose.connect(mongodbUri);
-let Tree = require("../models/trees");
+var Tree = require("../models/trees");
 
 // let db = mongoose.connection;
 // db.on('error',function (err) {
@@ -26,18 +26,24 @@ router.findAllPlants = (req,res) => {
 
 router.addTree = (req,res) => {
     res.setHeader('Content-Type', 'application/json');
-    let tree = new Tree();
 
-    tree.treeName = req.body.treeName;
-    tree.treeType = req.body.treeType;
-    tree.treePicPath = req.body.treePicPath;
-    tree.treeDescription = req.body.treeDescription;
+    if(isNaN(req.body.treeType)) {
+        res.json({message:'tree type should be a number'});
+    }
+    else{
+        let tree = new Tree();
+        tree.treeName = req.body.treeName;
+        tree.treeType = req.body.treeType;
+        tree.treePicPath = req.body.treePicPath;
+        tree.treeDescription = req.body.treeDescription;
+        tree.save(function (err) {
+            if(err)
+                res.json({message: 'ERROR', errmsg: err});
+            else
+                res.json({message:"New tree added!", data: tree});
 
-    tree.save(function (err) {
-        if(err)
-            res.send(err)
-        res.json({message:"New tree added!", data: tree});
-    })
+        })
+    }
 }
 
 module.exports = router;

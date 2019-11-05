@@ -25,7 +25,7 @@ describe('Trees', ()=> {
         });
     });
 
-    describe.only('POST /tagCreation', () => {
+    describe('POST /tagCreation', () => {
         describe('when user creates an tag', () => {
             it('should return message about creation is successful or not ', () => {
                 const tag = {
