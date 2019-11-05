@@ -38,7 +38,7 @@ app.get('/getUser/:id',users.checkOne);          //√
 //show all focus time
 // app.get('/totalFocusTime/:id',records.totalFocusTime);
 // app.get('/plantingRecords/:id', records.findRecordsOfUser);
-app.delete('/deleteUser/:id',users.deleteUser);
+app.delete('/deleteUser/:id',users.deleteUser);    //√
 app.delete('/deleteRecord/:id',records.deleteRecord);
 app.delete('/deleteTag/:id',tags.deleteTag);
 app.put('/deleteTree/:id',users.deleteTree);

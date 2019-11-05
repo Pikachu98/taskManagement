@@ -198,7 +198,7 @@ describe('Customers',  () =>{
                     })
             })
         })
-        describe.only("return the error information if id is invalid", () => {
+        describe("return the error information if id is invalid", () => {
             it('return the error information', done => {
                 request(server)
                     .get("/getUser/5db5f")
