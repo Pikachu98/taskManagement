@@ -49,7 +49,7 @@ router.deleteTag = function(req,res){
     res.setHeader('Content-Type', 'application/json');
     Tag.findByIdAndRemove(req.params.id,function (err) {
         if(err)
-            res.send(err)
+            res.json({message:"Tag NOT Deleted!", data:Tag})
         else
             res.json({message:"Tag Deleted!", data:Tag})
     })

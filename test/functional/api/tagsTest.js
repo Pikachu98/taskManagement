@@ -43,4 +43,24 @@ describe('Trees', ()=> {
             });
         })
     })
+
+    describe.only('DELETE /deleteTag/:id',() => {
+        describe("when the id is valid",() => {
+            it('should return the successful message with valid input when deleting TAG', () => {
+                return request(server)
+                    .delete("/deleteTag/5dbfcb56a6de3956b848575e")
+                    .expect({message: 'Tag Deleted!'});
+
+            });
+
+        });
+        // describe("when the tag id is invalid",() => {
+        //     it('should return message with invalid input when deleting TAG', () => {
+        //         return request(server)
+        //             .delete("/deleteTag/1000")
+        //             .expect(200)
+        //             .expect({message: 'Tag NOT Deleted!'});
+        //     });
+        // });
+    });
 })
