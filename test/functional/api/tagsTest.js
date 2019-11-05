@@ -63,4 +63,25 @@ describe('Tags', ()=> {
             });
         });
     });
+
+    describe.only("PUT /tagEdition/:id", () => {
+        describe("when the id is valid during editing", () => {
+            it('should return a message and database updates', () => {
+                const tag = {
+                    tagColor:"pink"
+                }
+                return request(server)
+                    .put('/tagEdition/5db633dc1666192d90185683')
+                    .send(tag)
+                    .expect(200)
+                    .then(res => {
+                        expect(res.body).to.include({
+                            message: "Tag edited!"
+                        })
+                        expect(res.body.data).to.have.property("tagColor", "pink");
+                    })
+            })
+        })
+    })
+
 })

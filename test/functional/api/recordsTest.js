@@ -25,7 +25,7 @@ describe('Records', ()=> {
     });
 
 
-    describe.only('DELETE /deleteRecord/:id',() => {
+    describe('DELETE /deleteRecord/:id',() => {
         describe("when the id is valid",() => {
             it('should return the successful message with valid id when deleting the planting records', () => {
                 return request(server)
