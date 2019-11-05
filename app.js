@@ -32,7 +32,7 @@ app.get('/getCoinBalance/:id',users.getCoins);   //√
 //administrator function
 app.get('/allUsers',users.getUsers);             //√
 //show all the trees in store
-app.get('/plantList', trees.findAllPlants);
+app.get('/plantList', trees.findAllPlants);      //√
 //check one of the users details,also for administrator
 app.get('/getUser/:id',users.checkOne);          //√
 //show all focus time

@@ -212,4 +212,40 @@ describe('Customers',  () =>{
             })
         });
     })
+
+    describe.only('POST /user/register', () => {
+        describe('if the input userEmail is the only one', () =>{
+            it('should return confirmation and update database ', () => {
+                const user = {
+                    userName: "Super Mario",
+                    userPassword: "MarioJumpsHigh",
+                    userEmail: "Marioooooooo123@gmail.com",
+                    userCoins: 10000
+                };
+                return request(server)
+                    .post("/user/register")
+                    .send(user)
+                    .expect(200)
+                    .then(res => {
+                        expect({message: 'User has registered successfully'});
+                    })
+            });
+
+            // after(() => {
+            //     return request(server)
+            //         .get("/addFriend/Super Mario")
+            //         .expect(200)
+            //         .then(res => {
+            //             expect(res.body.length).equals(1);
+            //             // const result = _.map(res.body, user => {
+            //             //     return {
+            //             //         userEmail: user.userEmail
+            //             //     };
+            //             // });
+            //             // expect(result).to.deep.include({ userEmail:'Marioooooooo123@gmail.com' });
+            //         });
+            // });
+        })
+    })
+
 })
