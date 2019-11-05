@@ -261,7 +261,7 @@ describe('Users',  () =>{
         })
     })
 
-    describe.only("PUT /buyTree/:id", () => {
+    describe("PUT /buyTree/:id", () => {
         describe('when userId is right and buy the tree successfully', () => {
             it('should insert the tree id into the user tree array', () => {
                 const body = {_id : "5db595801c9d440000a62eb2"};
@@ -303,5 +303,20 @@ describe('Users',  () =>{
             })
         })
     })
-
+    describe.only("PUT /deleteTree/:id", () => {
+        describe('when userId is right and delete the tree successfully', () => {
+            it('should delete the tree id from the user tree array', () => {
+                const body = {"_id": "5db595801c9d440000a62eb2"};
+                request(server)
+                    .put("/deleteTree/5db5f1276df19224807d71db")
+                    .send(body)
+                    .expect(200)
+                    .end(res => {
+                        expect(res.body).to.include({
+                            message: "Tree Successfully Deleted!"
+                        })
+                    })
+            })
+        })
+    })
 })
