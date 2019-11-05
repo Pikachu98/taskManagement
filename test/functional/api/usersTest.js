@@ -318,20 +318,20 @@ describe('Users',  () =>{
                     })
             })
         })
-    //     describe('when user click on the tree they haven\'t bought', () => {
-    //         it('should delete the tree id from the user tree array', () => {
-    //             const body = {"_id": "5db="};
-    //             request(server)
-    //                 .put("/deleteTree/5db5f1276df19224807d71db")
-    //                 .send(body)
-    //                 .expect(200)
-    //                 .end(res => {
-    //                     expect(res.body).to.include({
-    //                         message: "You have not bought this tree!"
-    //                     })
-    //                 })
-    //         })
-    //     })
+        describe('when user click on the tree they haven\'t bought', () => {
+            it('should delete the tree id from the user tree array', () => {
+                const body = {"_id": "5db="};
+                request(server)
+                    .put("/deleteTree/5db5f1276df19224807d71db")
+                    .send(body)
+                    .expect(200)
+                    .end(res => {
+                        expect(res.body).to.include({
+                            message: "You have not bought this tree!"
+                        })
+                    })
+            })
+        })
     //
     })
 })
