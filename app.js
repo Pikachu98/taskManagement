@@ -27,14 +27,14 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
 
-app.get('/addFriend/:id', users.findOne);
-app.get('/getCoinBalance/:id',users.getCoins);
+app.get('/addFriend/:id', users.findOne);        //√
+app.get('/getCoinBalance/:id',users.getCoins);   //√
 //administrator function
-app.get('/allUsers',users.getUsers);
+app.get('/allUsers',users.getUsers);             //√
 //show all the trees in store
 app.get('/plantList', trees.findAllPlants);
 //check one of the users details,also for administrator
-app.get('/getUser/:id',users.checkOne);
+app.get('/getUser/:id',users.checkOne);          //√
 //show all focus time
 // app.get('/totalFocusTime/:id',records.totalFocusTime);
 // app.get('/plantingRecords/:id', records.findRecordsOfUser);

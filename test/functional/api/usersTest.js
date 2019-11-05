@@ -20,7 +20,7 @@ describe('Customers',  () =>{
         let db = mongoose.connection;
         db.on('error', console.error.bind(console, 'connection error'));
         db.once('open', function () {
-            console.log('We are connected to MongoDB Atlas!');
+            console.log('Connected to database Successfully!');
             done();
         });
     });
@@ -182,7 +182,7 @@ describe('Customers',  () =>{
     })
 
     describe('GET /getUser/:id', () => {
-        describe("get the user if id is valid ",() =>{
+        describe.only("get the user if id is valid ",() =>{
             it("should return the information of specific user", done =>{
                 request(server)
                     .get("/getUser/5db5f1276df19224807d71db")
@@ -198,18 +198,6 @@ describe('Customers',  () =>{
                     })
             })
         })
-        describe.only("return the error information if id is invalid", () => {
-            it('return the error information', done => {
-                request(server)
-                    .get("/getUser/5db5f")
-                    .set("Accept", "application/json")
-                    .expect("Content-Type", /json/)
-                    .expect(200)
-                    .end((err,res) => {
-                        expect(res.body.message).equals("USER NOT Found!");
-                        done(err);
-                    })
-            })
-        });
+
     })
 })
