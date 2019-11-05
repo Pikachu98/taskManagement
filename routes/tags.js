@@ -6,7 +6,7 @@ router.editTag = function (req,res) {
     res.setHeader('Content-Type', 'application/json');
     Tag.findById(req.params.id,function (err,tag) {
         if(err)
-            res.send(err)
+            res.json({message:'Tag edited fail!'})
         else{
             tag.save(function(err){
                 if(err)

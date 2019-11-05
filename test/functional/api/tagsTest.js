@@ -82,6 +82,22 @@ describe('Tags', ()=> {
                     })
             })
         })
+        describe("when the id is invalid while editing", () => {
+            it('should return the message ', () => {
+                const tag = {
+                    tagColor:"pink"
+                }
+                return request(server)
+                    .put('/tagEdition/5db6')
+                    .send(tag)
+                    .expect(200)
+                    .then(res => {
+                        expect(res.body).to.include({
+                            message: "Tag edited fail!"
+                        })
+                    })
+            })
+        })
     })
 
 })
