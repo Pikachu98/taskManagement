@@ -27,7 +27,7 @@ describe('Records', ()=> {
 
     describe.only('DELETE /deleteRecord/:id',() => {
         describe("when the id is valid",() => {
-            it('should return the successful message with valid input when deleting the planting records', () => {
+            it('should return the successful message with valid id when deleting the planting records', () => {
                 return request(server)
                     .delete("/deleteRecord/5dc14a1c1c9d440000e915ec")
                     .expect({message: 'Records Deleted!'});
@@ -35,13 +35,13 @@ describe('Records', ()=> {
             });
 
         });
-        // describe("when the tag id is invalid",() => {
-        //     it('should return message with invalid input when deleting TAG', () => {
-        //         return request(server)
-        //             .delete("/deleteTag/1000")
-        //             .expect(200)
-        //             .expect({message: 'Tag NOT Deleted!'});
-        //     });
-        // });
+        describe("when the record id is invalid",() => {
+            it('should return message with invalid id when deleting planting records', () => {
+                return request(server)
+                    .delete("/deleteRecord/5d")
+                    .expect(200)
+                    .expect({message: 'Records NOT Deleted!'});
+            });
+        });
     });
 })
