@@ -61,13 +61,13 @@ router.addUser = (req,res) => {
     res.setHeader('Content-Type', 'application/json');
     var user = new User();
     //verify whether the userName and userEmail have existed or not
-    User.findOne({userName: req.body.userName}, function (err, user) {
+    User.findOne({userEmail: req.body.userEmail}, function (err, user) {
         if (err) {
             res.json({message: 'ERROR', errmsg: err});
         } else {
             // if(user.userName != null)
-            if (user != null && user.userName == req.body.userName)
-                res.json({message: 'user name already exists'})
+            if (user != null && user.userEmail == req.body.userEmail)
+                res.json({message: 'user email already exists'})
             else {
                 let user1 = new User();
                 user1.userName = req.body.userName;

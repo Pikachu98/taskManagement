@@ -237,14 +237,27 @@ describe('Customers',  () =>{
                     .expect(200)
                     .then(res => {
                         expect(res.body.data.length).equals(1);
-                        // const result = _.map(res.body, user => {
-                        //     return {
-                        //         userEmail: user.userEmail
-                        //     };
-                        // });
-                        // expect(result).to.deep.include({ userEmail:'Marioooooooo123@gmail.com' });
                     });
             });
+        })
+
+        describe('if the email has already be registerd', () => {
+            it('should return the error message', () => {
+                const user = {
+                    userName: "Super Mario",
+                    userPassword: "MarioJumpsHigh",
+                    userEmail: "Marioooooooo123@gmail.com",
+                    userCoins: 10000
+                };
+
+                return request(server)
+                    .post("/user/register")
+                    .send(user)
+                    .expect(200)
+                    .then(res => {
+                        expect({message: 'user email already exists'});
+                    })
+            })
         })
     })
 
