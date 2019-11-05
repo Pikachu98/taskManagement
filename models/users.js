@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 let mongoose = require("mongoose")
 
 let UserSchema = new mongoose.Schema(
@@ -20,3 +21,29 @@ let UserSchema = new mongoose.Schema(
   })
 
 module.exports = mongoose.model("Users", UserSchema)
+=======
+"use strict";
+
+var mongoose = require('mongoose');
+
+var UserSchema = new mongoose.Schema({
+  userName: String,
+  userPassword: String,
+  userEmail: String,
+  userCoins: {
+    type: Number,
+    default: 0
+  },
+  tree: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'trees'
+  }],
+  records: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'plantingRecord'
+  }]
+}, {
+  collection: 'users'
+});
+module.exports = mongoose.model('Users', UserSchema);
+>>>>>>> origin/master
