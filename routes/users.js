@@ -113,7 +113,7 @@ router.putTree = (req,res) => {
     res.setHeader('Content-Type','application/json');
     User.findById(req.params.id, function(err, user){
         if (err)
-            res.json({ message: 'USER not Found!', errmsg : err } );
+            res.json({ message: 'ERROR', errmsg : err } );
         else {
             if(user.userCoins < 500){
                 res.json({message:'Sorry, you do not have enough money!'})

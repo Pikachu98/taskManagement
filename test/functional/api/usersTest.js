@@ -289,7 +289,19 @@ describe('Users',  () =>{
             })
         })
 
-
+        describe('if the id is invalid', () => {
+            it('should return the error message', () => {
+                const body = {_id : "5db595801c9d440000a62eb2"};
+                request(server)
+                    .put("/buyTree/5dc")
+                    .send(body)
+                    .then(resp => {
+                        expect(resp.body).to.include({
+                            message: "ERROR"
+                        })
+                    })
+            })
+        })
     })
 
 })
