@@ -231,20 +231,20 @@ describe('Customers',  () =>{
                     })
             });
 
-            // after(() => {
-            //     return request(server)
-            //         .get("/addFriend/Super Mario")
-            //         .expect(200)
-            //         .then(res => {
-            //             expect(res.body.length).equals(1);
-            //             // const result = _.map(res.body, user => {
-            //             //     return {
-            //             //         userEmail: user.userEmail
-            //             //     };
-            //             // });
-            //             // expect(result).to.deep.include({ userEmail:'Marioooooooo123@gmail.com' });
-            //         });
-            // });
+            after(() => {
+                return request(server)
+                    .get("/addFriend/Super Mario")
+                    .expect(200)
+                    .then(res => {
+                        expect(res.body.data.length).equals(1);
+                        // const result = _.map(res.body, user => {
+                        //     return {
+                        //         userEmail: user.userEmail
+                        //     };
+                        // });
+                        // expect(result).to.deep.include({ userEmail:'Marioooooooo123@gmail.com' });
+                    });
+            });
         })
     })
 
