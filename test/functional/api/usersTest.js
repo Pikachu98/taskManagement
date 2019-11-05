@@ -213,7 +213,7 @@ describe('Customers',  () =>{
         });
     })
 
-    describe.only('POST /user/register', () => {
+    describe('POST /user/register', () => {
         describe('if the input userEmail is the only one', () =>{
             it('should return confirmation and update database ', () => {
                 const user = {
@@ -260,5 +260,7 @@ describe('Customers',  () =>{
             })
         })
     })
+
+
 
 })
