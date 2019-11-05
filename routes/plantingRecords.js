@@ -9,26 +9,26 @@
 // db.once('open',function () {
 //     console.log('Successfully Connected to  [' + db.name + ']');
 // });
-var User = require('../models/users');
-var Record = require('../models/plantingRecords');
-let express = require('express');
-let router = express.Router();
+
+import Record from "../models/plantingRecords"
+let express = require("express")
+let router = express.Router()
 
 function getTotalTime(array){
-    let totalTime = 0;
-    array.forEach(function(obj){
-        totalTime += obj.focusTime;
-    })
-    return totalTime;
+  let totalTime = 0
+  array.forEach(function(obj){
+    totalTime += obj.focusTime
+  })
+  return totalTime
 }
 
 router.deleteRecord = function(req,res){
-    Record.findByIdAndRemove(req.params.id,function(err){
-        if(err)
-            res.json({message:'Records NOT Deleted!'})
-        else
-            res.json({message:'Records Deleted!', data: Record})
-    })
+  Record.findByIdAndRemove(req.params.id,function(err){
+    if(err)
+      res.json({message:"Records NOT Deleted!"})
+    else
+      res.json({message:"Records Deleted!", data: Record})
+  })
 
 }
 
@@ -54,4 +54,4 @@ router.deleteRecord = function(req,res){
 // }
 
 
-module.exports = router;
+module.exports = router

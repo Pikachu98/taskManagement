@@ -11,158 +11,157 @@
 //   console.log('Successfully Connected to  [' + db.name + ']');
 // });
 
-var User = require('../models/users');
-var Tree = require('../models/trees');
-let express = require('express');
-let router = express.Router();
+import User from "../models/users"
+let express = require("express")
+let router = express.Router()
 
 router.getUsers = (req,res) => {
-    res.setHeader('Content-Type', 'application/json');
-    User.find(function (err, users) {
-        if(err)
-            res.send(err);
-        res.send(JSON.stringify(users,null,5));
-    });
+  res.setHeader("Content-Type", "application/json")
+  User.find(function (err, users) {
+    if(err)
+      res.send(err)
+    res.send(JSON.stringify(users,null,5))
+  })
 }
 
 router.checkOne = (req,res) => {
-    res.setHeader('Content-Type', 'application/json');
+  res.setHeader("Content-Type", "application/json")
 
-    User.find({ "_id" : req.params.id },function(err, donation) {
-        if (err)
-            res.json({ message: 'USER NOT Found!', errmsg : err } );
-        else
-            res.send(JSON.stringify(donation,null,5));
-    });
+  User.find({ "_id" : req.params.id },function(err, donation) {
+    if (err)
+      res.json({ message: "USER NOT Found!", errmsg : err } )
+    else
+      res.send(JSON.stringify(donation,null,5))
+  })
 }
 
 router.findOne = (req,res) =>{
-  res.setHeader('Content-Type','application/json');
+  res.setHeader("Content-Type","application/json")
 
-    var query = req.params.id;
-    var queryString = query.toString();
-    User.find({"userName":{$regex:queryString}},function(err,user) {
-        if (err)
-          res.json({ message: 'USER NOT FOUND', errmsg : err } );
-        else{
-         // res.send(user[userName]);
+  let query = req.params.id
+  let queryString = query.toString()
+  User.find({"userName":{$regex:queryString}},function(err,user) {
+    if (err)
+      res.json({ message: "USER NOT FOUND", errmsg : err } )
+    else{
+      // res.send(user[userName]);
 
-            if(user.length == 0)
-                res.json({message:'USER NOT FOUND'});
-            // if(user != null)
-            else
-                res.json({ message: 'User has found! Do you want to send a request?',data:user} );
+      if(user.length == 0)
+        res.json({message:"USER NOT FOUND"})
+      // if(user != null)
+      else
+        res.json({ message: "User has found! Do you want to send a request?",data:user} )
 
-        }
-  });
+    }
+  })
 }
 
 router.addUser = (req,res) => {
-    res.setHeader('Content-Type', 'application/json');
-    var user = new User();
-    //verify whether the userName and userEmail have existed or not
-    User.findOne({userEmail: req.body.userEmail}, function (err, user) {
-        if (err) {
-            res.json({message: 'ERROR', errmsg: err});
-        } else {
-            // if(user.userName != null)
-            if (user != null && user.userEmail == req.body.userEmail)
-                res.json({message: 'user email already exists'})
-            else {
-                let user1 = new User();
-                user1.userName = req.body.userName;
-                user1.userEmail = req.body.userEmail;
-                user1.userPassword = req.body.userPassword;
-                user1.save(function (err) {
-                    if (err)
-                        res.json({message: 'ERROR', errmsg: err});
-                    else
-                        res.json({message: 'User has registered successfully', data: user1})
-                })
-            }
-        }
-    })
+  res.setHeader("Content-Type", "application/json")
+  let user = new User()
+  //verify whether the userName and userEmail have existed or not
+  User.findOne({userEmail: req.body.userEmail}, function (err, user) {
+    if (err) {
+      res.json({message: "ERROR", errmsg: err})
+    } else {
+      // if(user.userName != null)
+      if (user != null && user.userEmail == req.body.userEmail)
+        res.json({message: "user email already exists"})
+      else {
+        let user1 = new User()
+        user1.userName = req.body.userName
+        user1.userEmail = req.body.userEmail
+        user1.userPassword = req.body.userPassword
+        user1.save(function (err) {
+          if (err)
+            res.json({message: "ERROR", errmsg: err})
+          else
+            res.json({message: "User has registered successfully", data: user1})
+        })
+      }
+    }
+  })
 }
 
 router.getCoins = (req, res)  => {
-    res.setHeader('Content-Type','application/json');
-    User.findById({"_id":req.params.id},{"_id":0,"userCoins":1},function(err,user) {
-        if (err)
-            res.json({ message: 'ERROR', errmsg : err } );
-        else{
-            user.save(function(err){
-                if(err)
-                    res.json({message:'ERROR'});
-                else
-                    res.json({message:'your coins: '+ user.toString()});
-            })
-        }
-    });
+  res.setHeader("Content-Type","application/json")
+  User.findById({"_id":req.params.id},{"_id":0,"userCoins":1},function(err,user) {
+    if (err)
+      res.json({ message: "ERROR", errmsg : err } )
+    else{
+      user.save(function(err){
+        if(err)
+          res.json({message:"ERROR"})
+        else
+          res.json({message:"your coins: "+ user.toString()})
+      })
+    }
+  })
 }
 
 router.deleteUser = (req,res) => {
-    User.findByIdAndRemove(req.params.id, function(err){
-        if(err)
-            res.json({message:'User NOT DELETED!'})
-        else
-            res.json({message:'User Successfully Deleted!'});
-    });
+  User.findByIdAndRemove(req.params.id, function(err){
+    if(err)
+      res.json({message:"User NOT DELETED!"})
+    else
+      res.json({message:"User Successfully Deleted!"})
+  })
 }
 
 router.putTree = (req,res) => {
-    res.setHeader('Content-Type','application/json');
-    User.findById(req.params.id, function(err, user){
-        if (err)
-            res.json({ message: 'ERROR', errmsg : err } );
-        else {
-            if(user.userCoins < 500){
-                res.json({message:'Sorry, you do not have enough money!'})
-            }
-            else{
-                let count = user.tree.length;
-                user.tree[count] = req.body._id;
-                user.markModified('tree');
-                user.userCoins -= 500;
-                user.save(function(err){
-                    if(err)
-                        res.json({message:'Error',errmsg:err})
-                   // user.tree.push(req.body._id);
-                    res.json({message:'Tree Successfully Bought!', data:user});
-                })
-            }
+  res.setHeader("Content-Type","application/json")
+  User.findById(req.params.id, function(err, user){
+    if (err)
+      res.json({ message: "ERROR", errmsg : err } )
+    else {
+      if(user.userCoins < 500){
+        res.json({message:"Sorry, you do not have enough money!"})
+      }
+      else{
+        let count = user.tree.length
+        user.tree[count] = req.body._id
+        user.markModified("tree")
+        user.userCoins -= 500
+        user.save(function(err){
+          if(err)
+            res.json({message:"Error",errmsg:err})
+          // user.tree.push(req.body._id);
+          res.json({message:"Tree Successfully Bought!", data:user})
+        })
+      }
 
 
-        }
-    })
+    }
+  })
 }
 
 router.deleteTree = (req,res) => {
-    res.setHeader('Content-Type','application/json');
-    User.findById(req.params.id, function(err, user){
-        if (err)
-            res.json({ message: 'USER not Found!', errmsg : err } );
-        else {
-            for(var i = 0; i < user.tree.length; i++){
-                let count = 0;
-                if(user.tree[i] == req.body._id){
-                    count = i;
-                    user.tree.splice(i,1);
-                    user.markModified('tree');
-                    user.userCoins += 300;
-                    user.save(function(err){
-                        if(err)
-                            res.json({message:'Tree cannot be deleted',errmsg:err})
+  res.setHeader("Content-Type","application/json")
+  User.findById(req.params.id, function(err, user){
+    if (err)
+      res.json({ message: "USER not Found!", errmsg : err } )
+    else {
+      for(let i = 0; i < user.tree.length; i++){
+        let count = 0
+        if(user.tree[i] == req.body._id){
+          count = i
+          user.tree.splice(i,1)
+          user.markModified("tree")
+          user.userCoins += 300
+          user.save(function(err){
+            if(err)
+              res.json({message:"Tree cannot be deleted",errmsg:err})
 
-                        res.json({message:'Tree Successfully Deleted!', data:user});
-                    })
-                }
-                if(i == user.tree.length -1 && count == 0)
-                    res.json({message:'You have not bought this tree!',errmsg:err});
-            }
+            res.json({message:"Tree Successfully Deleted!", data:user})
+          })
         }
-    })
+        if(i == user.tree.length -1 && count == 0)
+          res.json({message:"You have not bought this tree!",errmsg:err})
+      }
+    }
+  })
 }
 
 
 
-module.exports = router;
+module.exports = router
