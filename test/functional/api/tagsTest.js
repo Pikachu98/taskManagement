@@ -54,13 +54,13 @@ describe('Trees', ()=> {
             });
 
         });
-        // describe("when the tag id is invalid",() => {
-        //     it('should return message with invalid input when deleting TAG', () => {
-        //         return request(server)
-        //             .delete("/deleteTag/1000")
-        //             .expect(200)
-        //             .expect({message: 'Tag NOT Deleted!'});
-        //     });
-        // });
+        describe("when the tag id is invalid",() => {
+            it('should return message with invalid input when deleting TAG', () => {
+                return request(server)
+                    .delete("/deleteTag/1000")
+                    .expect(200)
+                    .expect({message: 'Tag NOT Deleted!'});
+            });
+        });
     });
 })
