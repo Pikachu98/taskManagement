@@ -25,7 +25,7 @@ function getTotalTime(array){
 router.deleteRecord = function(req,res){
     Record.findByIdAndRemove(req.params.id,function(err){
         if(err)
-            res.send(err)
+            res.json({message:'Records NOT Deleted!'})
         else
             res.json({message:'Records Deleted!', data: Record})
     })

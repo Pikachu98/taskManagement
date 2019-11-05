@@ -7,10 +7,10 @@ import chai from 'chai';
 var expect = chai.expect;
 const _ = require("lodash");
 
-let server = require("../../../bin/www");;
+let server = require("../../../bin/www");
 let mongod;
 
-describe('Trees', ()=> {
+describe('Tags', ()=> {
     before(function (done) {
         let username = 'qianwenzhangnancy';
         let password = 'zqw123456';
@@ -44,7 +44,7 @@ describe('Trees', ()=> {
         })
     })
 
-    describe.only('DELETE /deleteTag/:id',() => {
+    describe('DELETE /deleteTag/:id',() => {
         describe("when the id is valid",() => {
             it('should return the successful message with valid input when deleting TAG', () => {
                 return request(server)

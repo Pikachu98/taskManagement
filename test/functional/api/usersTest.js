@@ -6,11 +6,11 @@ import chai from 'chai';
 var expect = chai.expect;
 const _ = require("lodash");
 
-let server = require("../../../bin/www");;
+let server = require("../../../bin/www");
 let mongod;
 let db, matchingCondition;
 
-describe('Customers',  () =>{
+describe('Users',  () =>{
     before(function (done) {
         let username = 'qianwenzhangnancy';
         let password = 'zqw123456';

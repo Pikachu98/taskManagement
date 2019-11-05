@@ -7,7 +7,7 @@ import chai from 'chai';
 var expect = chai.expect;
 const _ = require("lodash");
 
-let server = require("../../../bin/www");;
+let server = require("../../../bin/www");
 let mongod;
 
 describe('Trees', ()=> {

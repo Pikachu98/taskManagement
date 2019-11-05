@@ -2,6 +2,7 @@ file:
     - test/functional/api/usersTest.js
     - test/functional/api/treesTest.js
     - test/functional/api/tagsTest.js
+    - test/functional/api/recordsTest.js
 
 
 require: '@babel/register'
