@@ -1,26 +1,31 @@
-let mongoose = require('mongoose');
+"use strict";
 
-let RecordSchema = new mongoose.Schema(
-    {
-        user:[{
-            type:mongoose.Schema.Types.ObjectId,
-            ref:'user'
-        }],
-        tree:[{
-            type:mongoose.Schema.Types.ObjectId,
-            ref:'tree'
-        }],
-        tag:[{
-            type:mongoose.Schema.Types.ObjectId,
-            ref:'tag'
-        }],
-        plantedTime: Date,
-        endedTime: Date,
-        focusTime: {type: Number, default: 0},
-        coinsEarn: {type: Number, default: 0},
-    },
-    {
-        collection:'records'
-    });
+var mongoose = require('mongoose');
 
+var RecordSchema = new mongoose.Schema({
+  user: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'user'
+  }],
+  tree: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'tree'
+  }],
+  tag: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'tag'
+  }],
+  plantedTime: Date,
+  endedTime: Date,
+  focusTime: {
+    type: Number,
+    default: 0
+  },
+  coinsEarn: {
+    type: Number,
+    default: 0
+  }
+}, {
+  collection: 'records'
+});
 module.exports = mongoose.model('Record', RecordSchema);
