@@ -64,7 +64,7 @@ describe('Tags', ()=> {
         });
     });
 
-    describe.only("PUT /tagEdition/:id", () => {
+    describe("PUT /tagEdition/:id", () => {
         describe("when the id is valid during editing", () => {
             it('should return a message and database updates', () => {
                 const tag = {

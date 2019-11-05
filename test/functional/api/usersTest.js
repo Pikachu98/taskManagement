@@ -261,6 +261,35 @@ describe('Users',  () =>{
         })
     })
 
+    describe("PUT /buyTree/:id", () => {
+        describe.only('when userId is right and buy the tree successfully', () => {
+            it('should insert the tree id into the user tree array', () => {
+                const body = {_id : "5db595801c9d440000a62eb2"};
+                request(server)
+                    .put("/buyTree/5db5f1276df19224807d71db")
+                    .send(body)
+                    .then(resp => {
+                        expect(resp.body).to.include({
+                            message: "Tree Successfully Bought!"
+                        })
+                    })
+            })
+        })
+        // describe('when user don\'t have enough coins', () => {
+        //     it('should return the message which let user know they don\'t have enough coins', () => {
+        //         const body = {_id : "5db595801c9d440000a62eb2"};
+        //         request(server)
+        //             .put("/buyTree/5dc101d0c681b14c1c1eaa6c")
+        //             .send(body)
+        //             .then(resp => {
+        //                 expect(resp.body).to.include({
+        //                     message: "Sorry, you do not have enough money!"
+        //                 })
+        //             })
+        //     })
+        // })
+        //
 
+    })
 
 })
